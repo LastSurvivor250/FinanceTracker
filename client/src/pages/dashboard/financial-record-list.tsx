@@ -73,15 +73,18 @@ export const FinancialRecordList = () => {
       <table {...getTableProps()} className="table">
         <thead>
           {headerGroups.map((hg) => (
-            <tr {...hg.getHeaderGroupProps()}>
+            <tr key={hg.id} {...hg.getHeaderGroupProps()}>
               {hg.headers.map((column) => (
-                <th {...column.getHeaderProps()}> {column.render("Header")}</th>
+                <th key={column.id} {...column.getHeaderProps()}>
+                  {" "}
+                  {column.render("Header")}
+                </th>
               ))}
             </tr>
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map((row, idx) => {
+          {rows.map((row) => {
             prepareRow(row);
             return (
               <tr key={row.id} {...row.getRowProps()}>
