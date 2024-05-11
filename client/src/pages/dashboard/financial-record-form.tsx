@@ -3,7 +3,7 @@ import {
   FinancialRecord,
   useFinancialRecords,
 } from "../../contexts/financial-record-context";
-import { useTable, Column, CellProps } from "react-table";
+import { useTable, Column, CellProps, Row } from "react-table";
 
 interface EditableCellProps extends CellProps<FinancialRecord> {
   updateRecord: (rowIndex: number, columnId: string, value: any) => void;
@@ -57,7 +57,73 @@ export const FinancialRecordList = () => {
 
   const columns: Array<Column<FinancialRecord>> = useMemo(
     () => [
-      // Define your columns here...
+      {
+        Header: "Description",
+        accessor: "description",
+        Cell: (props) => (
+          <EditableCell
+            {...props}
+            updateRecord={updateCellRecord}
+            editable={true}
+          />
+        ),
+      },
+      {
+        Header: "Amount",
+        accessor: "amount",
+        Cell: (props) => (
+          <EditableCell
+            {...props}
+            updateRecord={updateCellRecord}
+            editable={true}
+          />
+        ),
+      },
+      {
+        Header: "Category",
+        accessor: "category",
+        Cell: (props) => (
+          <EditableCell
+            {...props}
+            updateRecord={updateCellRecord}
+            editable={true}
+          />
+        ),
+      },
+      {
+        Header: "Payment Method",
+        accessor: "paymentMethod",
+        Cell: (props) => (
+          <EditableCell
+            {...props}
+            updateRecord={updateCellRecord}
+            editable={true}
+          />
+        ),
+      },
+      {
+        Header: "Date",
+        accessor: "date",
+        Cell: (props) => (
+          <EditableCell
+            {...props}
+            updateRecord={updateCellRecord}
+            editable={false}
+          />
+        ),
+      },
+      {
+        Header: "Delete",
+        id: "delete",
+        Cell: ({ row }) => (
+          <button
+            onClick={() => deleteRecord(row.original._id ?? "")}
+            className="button"
+          >
+            Delete
+          </button>
+        ),
+      },
     ],
     [records]
   );
@@ -67,32 +133,25 @@ export const FinancialRecordList = () => {
       columns,
       data: records,
     });
-
   return (
     <div className="table-container">
       <table {...getTableProps()} className="table">
         <thead>
           {headerGroups.map((hg) => (
-            <tr key={hg.id} {...hg.getHeaderGroupProps()}>
+            <tr {...hg.getHeaderGroupProps()}>
               {hg.headers.map((column) => (
-                <th key={column.id} {...column.getHeaderProps()}>
-                  {" "}
-                  {column.render("Header")}
-                </th>
+                <th {...column.getHeaderProps()}> {column.render("Header")}</th>
               ))}
             </tr>
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
+          {rows.map((row, idx) => {
             prepareRow(row);
             return (
-              <tr key={row.id} {...row.getRowProps()}>
-                {row.cells.map((cell, idx) => (
-                  <td key={idx} {...cell.getCellProps()}>
-                    {" "}
-                    {cell.render("Cell")}{" "}
-                  </td>
+              <tr {...row.getRowProps()}>
+                {row.cells.map((cell) => (
+                  <td {...cell.getCellProps()}> {cell.render("Cell")} </td>
                 ))}
               </tr>
             );
