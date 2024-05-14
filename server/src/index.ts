@@ -7,7 +7,13 @@ const app: Express = express();
 const port = process.env.PORT || 3001;
 
 app.use(express.json());
-app.use(cors());
+app.use(cors(
+  {
+    origin:["finance-tracker-alpha-self.vercel.app"],
+    credentials: true,
+    methods: ["POST", "GET"]
+  }
+));
 
 const mongoURI: string =
   "mongodb+srv://migasiuk250:Um23Q8aMkNMfQyT5@finacialtracker.aolg7bn.mongodb.net/";
