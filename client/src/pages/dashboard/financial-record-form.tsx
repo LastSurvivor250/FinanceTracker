@@ -6,7 +6,7 @@ import {
 import { useTable, Column, CellProps, Row } from "react-table";
 
 interface EditableCellProps extends CellProps<FinancialRecord> {
-  updateRecord: (rowIndex: number, columnId: string, value: any) => void;
+  updateRecord: (rowIndex: any, columnId: any, value: any) => void;
   editable: boolean;
 }
 
